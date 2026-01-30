@@ -4,88 +4,223 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HEAVEN ANIME - Streaming Platform</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body { background-color:#0a0a0c; color:white; font-family:'Tajawal','Inter',sans-serif; }
-    .rtl { direction: rtl; }
-    .ltr { direction: ltr; }
+    /* Telegram Night Theme Inspired */
+    body {
+      margin: 0;
+      font-family: "Tajawal", "Inter", sans-serif;
+      background-color: #0f0f0f; /* dark background */
+      color: #e0e0e0;           /* light text */
+    }
+    header {
+      background-color: #1c1c1c;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 12px 20px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      color: #3390ec; /* Telegram blue */
+      font-weight: bold;
+      margin: 0;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #e0e0e0;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+    nav button:hover {
+      color: #3390ec;
+    }
+    main {
+      padding: 90px 20px 40px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .hero {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .hero img {
+      width: 100%;
+      display: block;
+    }
+    .hero-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(15,15,15,0.9), rgba(15,15,15,0));
+    }
+    .hero-info h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #fff;
+    }
+    .hero-info p {
+      font-size: 14px;
+      color: #ccc;
+    }
+    .hero-info button {
+      margin-top: 10px;
+      background-color: #3390ec;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background-color: #1c1c1c;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #3390ec;
+    }
+    .card img {
+      width: 100%;
+      display: block;
+    }
+    .card h3 {
+      margin: 10px;
+      font-size: 14px;
+      color: #fff;
+    }
+    .card button {
+      margin-bottom: 10px;
+      background: none;
+      border: none;
+      color: #3390ec;
+      cursor: pointer;
+    }
+    /* Modal Player */
+    #playerModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    #playerModal.active {
+      display: flex;
+    }
+    #playerBox {
+      background: #1c1c1c;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 90%;
+      max-width: 800px;
+    }
+    #playerBox iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+    }
+    #playerBox .close {
+      text-align: right;
+      padding: 8px;
+    }
+    #playerBox .close button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid #2a2a2a;
+      margin-top: 40px;
+      color: #777;
+    }
   </style>
 </head>
-<body class="bg-[#0a0a0c] text-white">
+<body>
 
-  <!-- Header -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
-    <div class="container mx-auto px-4 h-16 flex items-center justify-between">
-      <h1 class="text-2xl font-black tracking-tighter bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">HEAVEN</h1>
-      <nav class="hidden md:flex gap-6">
-        <button class="hover:text-cyan-400">Home</button>
-        <button class="hover:text-cyan-400">Movies</button>
-      </nav>
-    </div>
+  <header>
+    <h1>HEAVEN</h1>
+    <nav>
+      <button>Home</button>
+      <button>Movies</button>
+    </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="pt-24 container mx-auto px-4">
-    <div class="relative h-[400px] rounded-3xl overflow-hidden">
-      <img src="https://images.unsplash.com/photo-1541562232579-512a21359920?q=80&w=2000&auto=format&fit=crop" 
-           alt="Attack on Titan" class="w-full h-full object-cover">
-      <div class="absolute bottom-0 left-0 p-8 space-y-4 max-w-xl">
-        <span class="px-2 py-0.5 bg-cyan-500 text-black text-xs font-bold rounded">TV</span>
-        <h1 class="text-4xl font-black">Attack on Titan</h1>
-        <p class="text-gray-300">بعد أن تم تدمير مسقط رأسه وقتل والدته، يتعهد إيرين ييغر الشاب بتطهير الأرض من العمالقة...</p>
-        <button onclick="openPlayer('https://example.com/video1')" 
-                class="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-cyan-400 transition">شاهد الآن</button>
+  <main>
+    <!-- Hero -->
+    <div class="hero">
+      <img src="https://images.unsplash.com/photo-1541562232579-512a21359920?q=80&w=2000&auto=format&fit=crop" alt="Attack on Titan">
+      <div class="hero-info">
+        <h2>Attack on Titan</h2>
+        <p>بعد أن تم تدمير مسقط رأسه وقتل والدته، يتعهد إيرين ييغر...</p>
+        <button onclick="openPlayer('https://example.com/video1')">شاهد الآن</button>
       </div>
     </div>
-  </section>
 
-  <!-- Anime Grid -->
-  <section class="container mx-auto px-4 mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-    <div class="group">
-      <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=1000&auto=format&fit=crop" 
-           alt="One Piece" class="rounded-xl shadow-lg group-hover:scale-105 transition">
-      <h3 class="mt-2 font-bold group-hover:text-cyan-400">One Piece</h3>
-      <button onclick="openPlayer('https://example.com/video2')" 
-              class="mt-2 text-sm text-cyan-400 underline">Watch</button>
-    </div>
-    <div class="group">
-      <img src="https://images.unsplash.com/photo-1578632292335-df3abbb0d586?q=80&w=1000&auto=format&fit=crop" 
-           alt="Demon Slayer" class="rounded-xl shadow-lg group-hover:scale-105 transition">
-      <h3 class="mt-2 font-bold group-hover:text-cyan-400">Demon Slayer</h3>
-      <button onclick="openPlayer('https://example.com/video3')" 
-              class="mt-2 text-sm text-cyan-400 underline">Watch</button>
-    </div>
-  </section>
-
-  <!-- Video Player Modal -->
-  <div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center">
-    <div class="bg-black rounded-xl overflow-hidden w-11/12 md:w-3/4 lg:w-1/2">
-      <div class="flex justify-end p-2">
-        <button onclick="closePlayer()" class="text-white text-xl">&times;</button>
+    <!-- Grid -->
+    <div class="grid">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=1000&auto=format&fit=crop" alt="One Piece">
+        <h3>One Piece</h3>
+        <button onclick="openPlayer('https://example.com/video2')">Watch</button>
       </div>
-      <iframe id="videoFrame" src="" frameborder="0" allowfullscreen class="w-full h-[400px]"></iframe>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1578632292335-df3abbb0d586?q=80&w=1000&auto=format&fit=crop" alt="Demon Slayer">
+        <h3>Demon Slayer</h3>
+        <button onclick="openPlayer('https://example.com/video3')">Watch</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Player Modal -->
+  <div id="playerModal">
+    <div id="playerBox">
+      <div class="close"><button onclick="closePlayer()">&times;</button></div>
+      <iframe id="videoFrame" src=""></iframe>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="border-t border-gray-800 py-10 mt-20 text-center">
-    <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4">HEAVEN ANIME</h1>
-    <p class="text-gray-500 text-sm">جميع الحقوق محفوظة © 2025</p>
+  <footer>
+    HEAVEN ANIME © 2025
   </footer>
 
-  <!-- JS -->
   <script>
     function openPlayer(link) {
       document.getElementById('videoFrame').src = link;
-      document.getElementById('playerModal').classList.remove('hidden');
-      document.getElementById('playerModal').classList.add('flex');
+      document.getElementById('playerModal').classList.add('active');
     }
     function closePlayer() {
       document.getElementById('videoFrame').src = '';
-      document.getElementById('playerModal').classList.add('hidden');
-      document.getElementById('playerModal').classList.remove('flex');
+      document.getElementById('playerModal').classList.remove('active');
     }
   </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
