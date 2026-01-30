@@ -1,95 +1,91 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HEAVEN ANIME - Streaming Platform</title>
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- React & ReactDOM (Production UMD builds) -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Lucide Icons (UMD build) -->
-  <script src="https://unpkg.com/lucide@0.545.0/dist/umd/lucide.js"></script>
-
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body { margin:0; padding:0; background-color:#0a0a0c; color:white; font-family:'Tajawal','Inter',sans-serif; }
+    body { background-color:#0a0a0c; color:white; font-family:'Tajawal','Inter',sans-serif; }
     .rtl { direction: rtl; }
     .ltr { direction: ltr; }
-    .custom-scrollbar::-webkit-scrollbar { width:4px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background:transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:10px; }
   </style>
 </head>
 <body class="bg-[#0a0a0c] text-white">
-  <div id="root"></div>
 
-    <script>
-    const { useState } = React;
-    const { createRoot } = ReactDOM;
-    const { Search, Globe, Play, Bookmark, Share2, ChevronRight, ChevronLeft, Settings, Maximize, Volume2, Sparkles } = lucide;
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+      <h1 class="text-2xl font-black tracking-tighter bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">HEAVEN</h1>
+      <nav class="hidden md:flex gap-6">
+        <button class="hover:text-cyan-400">Home</button>
+        <button class="hover:text-cyan-400">Movies</button>
+      </nav>
+    </div>
+  </header>
 
-    const AppView = { HOME: 'HOME', DISCOVERY: 'DISCOVERY', DETAILS: 'DETAILS', WATCH: 'WATCH' };
-    const Language = { AR: 'ar', EN: 'en' };
+  <!-- Hero -->
+  <section class="pt-24 container mx-auto px-4">
+    <div class="relative h-[400px] rounded-3xl overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1541562232579-512a21359920?q=80&w=2000&auto=format&fit=crop" 
+           alt="Attack on Titan" class="w-full h-full object-cover">
+      <div class="absolute bottom-0 left-0 p-8 space-y-4 max-w-xl">
+        <span class="px-2 py-0.5 bg-cyan-500 text-black text-xs font-bold rounded">TV</span>
+        <h1 class="text-4xl font-black">Attack on Titan</h1>
+        <p class="text-gray-300">بعد أن تم تدمير مسقط رأسه وقتل والدته، يتعهد إيرين ييغر الشاب بتطهير الأرض من العمالقة...</p>
+        <button onclick="openPlayer('https://example.com/video1')" 
+                class="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-cyan-400 transition">شاهد الآن</button>
+      </div>
+    </div>
+  </section>
 
-    const MOCK_ANIME = [
-      { id: '1', title: 'هجوم العمالقة', titleEn: 'Attack on Titan', synopsis: 'بعد أن تم تدمير مسقط رأسه وقتل والدته...', poster: 'https://images.unsplash.com/photo-1541562232579-512a21359920?q=80&w=1000&auto=format&fit=crop', banner: 'https://images.unsplash.com/photo-1541562232579-512a21359920?q=80&w=2000&auto=format&fit=crop', rating: 9.1, year: 2013, status: 'Completed', type: 'TV', genres: ['Action','Drama','Fantasy'], episodesCount:87, studio:'MAPPA' },
-      { id: '2', title: 'ون بيس', titleEn: 'One Piece', synopsis: 'يتبع مغامرات مونكي دي لوفي...', poster: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=1000&auto=format&fit=crop', banner: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=2000&auto=format&fit=crop', rating: 8.9, year: 1999, status: 'Ongoing', type: 'TV', genres: ['Adventure','Fantasy','Comedy'], episodesCount:1100, studio:'Toei Animation' },
-      { id: '3', title: 'قاتل الشياطين', titleEn: 'Demon Slayer', synopsis: 'تانجيرو كامادو، فتى طيب القلب...', poster: 'https://images.unsplash.com/photo-1578632292335-df3abbb0d586?q=80&w=1000&auto=format&fit=crop', banner: 'https://images.unsplash.com/photo-1578632292335-df3abbb0d586?q=80&w=2000&auto=format&fit=crop', rating: 8.7, year: 2019, status: 'Ongoing', type: 'TV', genres: ['Action','Fantasy'], episodesCount:55, studio:'ufotable' }
-    ];
+  <!-- Anime Grid -->
+  <section class="container mx-auto px-4 mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+    <div class="group">
+      <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=1000&auto=format&fit=crop" 
+           alt="One Piece" class="rounded-xl shadow-lg group-hover:scale-105 transition">
+      <h3 class="mt-2 font-bold group-hover:text-cyan-400">One Piece</h3>
+      <button onclick="openPlayer('https://example.com/video2')" 
+              class="mt-2 text-sm text-cyan-400 underline">Watch</button>
+    </div>
+    <div class="group">
+      <img src="https://images.unsplash.com/photo-1578632292335-df3abbb0d586?q=80&w=1000&auto=format&fit=crop" 
+           alt="Demon Slayer" class="rounded-xl shadow-lg group-hover:scale-105 transition">
+      <h3 class="mt-2 font-bold group-hover:text-cyan-400">Demon Slayer</h3>
+      <button onclick="openPlayer('https://example.com/video3')" 
+              class="mt-2 text-sm text-cyan-400 underline">Watch</button>
+    </div>
+  </section>
 
-    // ===== Components =====
-    function Header({ onSearch, onHome, onToggleLang, language }) {
-      const [query,setQuery] = useState('');
-      const isRTL = language===Language.AR;
-      return React.createElement('header', { className:'fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/5' },
-        React.createElement('div', { className:'container mx-auto px-4 h-16 flex items-center justify-between gap-4' },
-          React.createElement('div', { className:'flex items-center gap-8' },
-            React.createElement('button', { onClick:onHome, className:'text-2xl font-black tracking-tighter bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity' }, 'HEAVEN'),
-            React.createElement('nav', { className:'hidden md:flex items-center gap-6' },
-              React.createElement('button', { onClick:onHome, className:'text-sm font-medium hover:text-cyan-400 transition-colors' }, language===Language.AR?'الرئيسية':'Home'),
-              React.createElement('button', { className:'text-sm font-medium hover:text-cyan-400 transition-colors' }, language===Language.AR?'أفلام':'Movies')
-            )
-          ),
-          React.createElement('div', { className:'flex-grow max-w-xl' },
-            React.createElement('form', { onSubmit:e=>{ e.preventDefault(); onSearch(query); }, className:'relative group' },
-              React.createElement(Search, { className:`absolute ${isRTL?'right-3':'left-3'} top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-cyan-400 transition-colors` }),
-              React.createElement('input', { type:'text', value:query, onChange:e=>setQuery(e.target.value), placeholder:language===Language.AR?'ابحث عن الأنمي المفضل لديك...':'Search your favorite anime...', className:`w-full bg-white/5 border border-white/10 rounded-full ${isRTL?'pr-10 pl-4':'pl-10 pr-4'} py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 transition-all` })
-            )
-          ),
-          React.createElement('div', { className:'flex items-center gap-4' },
-            React.createElement('button', { onClick:onToggleLang, className:'p-2 hover:bg-white/10 rounded-full transition-colors flex items-center gap-2' },
-              React.createElement(Globe, { className:'w-5 h-5' }),
-              React.createElement('span', { className:'text-xs font-bold uppercase' }, language)
-            )
-          )
-        )
-      );
+  <!-- Video Player Modal -->
+  <div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center">
+    <div class="bg-black rounded-xl overflow-hidden w-11/12 md:w-3/4 lg:w-1/2">
+      <div class="flex justify-end p-2">
+        <button onclick="closePlayer()" class="text-white text-xl">&times;</button>
+      </div>
+      <iframe id="videoFrame" src="" frameborder="0" allowfullscreen class="w-full h-[400px]"></iframe>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-800 py-10 mt-20 text-center">
+    <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4">HEAVEN ANIME</h1>
+    <p class="text-gray-500 text-sm">جميع الحقوق محفوظة © 2025</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    function openPlayer(link) {
+      document.getElementById('videoFrame').src = link;
+      document.getElementById('playerModal').classList.remove('hidden');
+      document.getElementById('playerModal').classList.add('flex');
     }
+    function closePlayer() {
+      document.getElementById('videoFrame').src = '';
+      document.getElementById('playerModal').classList.add('hidden');
+      document.getElementById('playerModal').classList.remove('flex');
+    }
+  </script>
 
-    function Hero({ anime, onWatch, language }) {
-      if(!anime) return null;
-      return React.createElement('div', { className:'relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden group' },
-        React.createElement('div', { className:'absolute inset-0' },
-          React.createElement('img', { src:anime.banner, alt:anime.title, className:'w-full h-full object-cover group-hover:scale-105 transition-transform duration-700' }),
-          React.createElement('div', { className:'absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/40 to-transparent' }),
-          React.createElement('div', { className:'absolute inset-0 bg-gradient-to-r from-[#0a0a0c] via-transparent to-transparent' })
-        ),
-        React.createElement('div', { className:'absolute bottom-0 left-0 right-0 p-8 md:p-16 space-y-6 max-w-3xl' },
-          React.createElement('div', { className:'flex items-center gap-2' },
-            React.createElement('span', { className:'px-2 py-0.5 bg-cyan-500 text-black text-[10px] font-bold rounded uppercase' }, anime.type),
-            React.createElement('span', { className:'text-cyan-400 text-sm font-bold' }, `★ ${anime.rating}`)
-          ),
-          React.createElement('h1', { className:'text-4xl md:text-6xl font-black' }, language===Language.AR?anime.title:anime.titleEn),
-
-
-
-
-
-
-
-
-                            
+</body>
+</html>
